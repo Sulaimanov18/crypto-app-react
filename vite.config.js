@@ -1,9 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-export default {
-  build: {
-    outDir: 'dist'
-  }
-}
+export default defineConfig({
+  plugins: [react()],
+  base: '/crypto-exchamge/', // Important for GitHub Pages
+});

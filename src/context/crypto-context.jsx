@@ -3,6 +3,7 @@ import { fakeFetchCrypto, fetchAssets } from '../api.js';
 import { perecntDifference } from '../utils.js';
 
 const CryptoContext = createContext({
+  setAssets: () => {},
   assets: [],
   crypto: [],
   loading: false,
@@ -13,13 +14,14 @@ export function CryptoContextProvider({ children }) {
   const [loading, setLoading] = useState(false); // Changed default loading to true
   const [crypto, setCrypto] = useState([]);
   const [assets, setAssets] = useState([]);
+  
 
   function mapAssets(assets, result) {
     console.log(assets, result);
     
     return assets.map((asset) => {
       const coin = result.find((c) => c.id === asset.id);
-      return {
+      return {  
         grow: asset.price < coin.price, // boolean
         growPercent: perecntDifference(asset.price, coin.price),
         totalAmount: asset.amount * coin.price,
@@ -38,7 +40,8 @@ export function CryptoContextProvider({ children }) {
 
       setAssets(mapAssets(assets, result));
       setCrypto(result);
-      setLoading(false);
+      setLoading(false); //idndicate that loading is done
+      // 
     }
     preload();
   }, []);
@@ -48,7 +51,7 @@ export function CryptoContextProvider({ children }) {
   }
 
   return (
-    <CryptoContext.Provider value={{ loading, crypto, assets, addAsset }}>
+    <CryptoContext.Provider value={{ loading, crypto, assets, addAsset, setAssets }}>
       {children}
     </CryptoContext.Provider>
   );

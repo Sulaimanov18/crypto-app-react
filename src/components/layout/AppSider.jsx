@@ -4,18 +4,38 @@ import {  capitalize } from '../../utils';
 import {useContext} from 'react';
 import CryptoContext from '../../context/crypto-context';
 
+
 const siderStyle = {
   padding: '1rem',
 };
 
+const buttonStyle = {
+  position: 'absolute',
+  color: 'grey',
+  top: '10px', 
+  right: '10px',
+  zIndex: 1,
+  cursor: 'pointer',
+
+};
+
 export default function AppSider() {
-  const { assets} = useContext(CryptoContext);
+  const {  assets, setAssets} = useContext(CryptoContext);
+
+  function deleteAssetById(id) {
+    const newAssets = assets.filter((asset) => asset.id !== id);
+    setAssets(newAssets);
+    
+  }
   
 
   return (
     <Layout.Sider width="25%" style={siderStyle}>
       {assets.map((asset) => (
         <Card key={asset.id} style={{ marginBottom: '1rem' }}>
+        <Button type="text"  onClick={() => deleteAssetById(asset.id)} style={buttonStyle}>
+        X
+      </Button>
           <Statistic
             title={capitalize(asset.id)}
             value={asset.totalAmount}
@@ -26,6 +46,7 @@ export default function AppSider() {
             prefix={asset.grow ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
             suffix="$"
           />
+          
           <List
             size="small"
             dataSource={[

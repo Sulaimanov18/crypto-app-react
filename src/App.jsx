@@ -1,5 +1,7 @@
 import {CryptoContextProvider} from './context/crypto-context';
 import AppLayout from './components/layout/AppLayout';
+import React from 'react';
+
 
 const headerStyle = {
   textAlign: 'center',
